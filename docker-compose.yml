@@ -1,0 +1,23 @@
+---
+version: "3.0"
+services:
+  redis:
+    image: redis:4-alpine
+    command: sh /app/init.sh
+    environment:
+      - REDIS_DEFAULT_MASTER=redis-master-chooser_redis_1
+      - REDIS_HOST=redis
+      - SENTINEL_HOST=sentinel
+    volumes:
+      - .:/app
+    working_dir: /app
+  sentinel:
+    image: redis:4-alpine
+    command: sh /app/init.sh
+    environment:
+      - REDIS_DEFAULT_MASTER=redis-master-chooser_redis_1
+      - REDIS_MODE=sentinel
+      - SENTINEL_HOST=sentinel
+    volumes:
+      - .:/app
+    working_dir: /app
